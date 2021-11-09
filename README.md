@@ -8,6 +8,9 @@ Learn everything about NFT
 * NFTs (Non-Fungible Tokens) can be summed up with one word: "unique". These are smart contracts deployed on a blockchain that represent something unique.
 * Unlike FT, Non-fungible tokens have token ids. Fungible tokens (FT) are all identical.
 * Unlike ERC20 standard which has 1 token type/id, the ERC721 has many token types/ids.
+* When someone transfers NFT to someone, unlike FT where they just have to know the contract address, here they shall have to know both
+	- nft contract address
+	- nft token id
 
 ### Metadata
 * All NFTs have what’s called metadata. Each `tokenId` has a specific `tokenURI` that defines this API call, which returns a JSON object that looks something like this:
@@ -88,3 +91,5 @@ This is an example where the technicality will be explained:
 * [How to Make an NFT and Render it on the OpenSea Marketplace](https://www.freecodecamp.org/news/how-to-make-an-nft-and-render-on-opensea-marketplace/)
 * [Build, Deploy, and Sell Your Own Dynamic NFT | Chainlink](https://blog.chain.link/build-deploy-and-sell-your-own-dynamic-nft/)
 * [ERC-1155 proposal](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md)
+* [Create a Complete NFT App - Smart contract, Backend, Frontend](https://www.youtube.com/watch?v=WsZyb2T83lo)
+* [Developing on OpenSea | Full Guide For Developers](https://www.youtube.com/watch?v=p88ZiBKejTY)
