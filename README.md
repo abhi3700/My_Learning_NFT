@@ -42,11 +42,6 @@ Learn everything about NFT
 
 * Storing metadata on-chain & off-chain: The _name_, _description_, and _attributes_ are easy to store on-chain, but the _image_ is the hard part. It would be better if we could store our images on-chain so that they can’t go down or get hacked. That's why __IPFS__. This is to ensure the NFT asset with image is not duplicated elsewhere. And this is ensured by creating a hash based on the image & directed to a link of IPFS like `https://ipfs.io/ipfs/QmTgqnhFBMkfT9s8PHKcdXBn1f5bG3Q5hmBaR4U6hoTvb1?filename=Chainlink_Elf.png`. This is ideal for storing images since it means that every time the image is updated, the on-chain hash/tokenURI also has to change, meaning that we can have a record of the history of the metadata. It’s also really easy to add an image onto IPFS and doesn’t require running a server!
 
-## Standards
-* ERC721
-* ERC1155: ERC721 + batch transfer of tokens (with different ids).
-	- very helpful for games, where a user buying weapons of different type (or id) which is gettting transferred at a time (i.e. batch transfer).
-
 ## Marketplace
 This is an example where the technicality will be explained:
 
@@ -76,20 +71,63 @@ This is an example where the technicality will be explained:
 	1. Backend
 		- stores the metadata like name, description, image (which stores the IPFS url), attributes.
 		- stores the asset in IPFS cloud
+* In programming, an NFT is not an image or a gif, it’s a number that has the owner a wallet.
+* And the no. is managed.
+* E.g. In this url - `https://opensea.io/assets/0x80a4b80c653112b789517eb28ac111519b608b19/6236`, NFT is the number `6236`.
+* The Smart contracts handling the ownership of the NFTs are ERC721 and ERC1155.
+* In the smart contract there’s a function called tokenURI (or uri for ERC1155) , that base URI must be public and starts with `https://` or `ipfs://`
+* for example for the above NFT `6236` the smart contract is is located here `https://etherscan.io/address/0x80a4b80c653112b789517eb28ac111519b608b19` has the token URI `https://api.cryptocannabisclub.com/metadata/6236`
+* The base URI: `https://api.cryptocannabisclub.com/metadata/`
+* In order to get the token URI just append the token id with the base URI. E.g:
+	- For `1` token id, the base URI: `https://api.cryptocannabisclub.com/metadata/1`
+
+### Standards
+#### ERC721
+* cons:
+	- Every token `id` has a balance of `1` (by default) & owner (could be creator or holder).
+* coded as:
+```
+// mapping(id => owner)
+mapping(uint256 => address) _owners;
+// mapping(owner => balances)
+mapping(address => uint256) private _balances;
+```
+
+#### ERC1155: inspired from ERC20, ERC777, ERC721.
+* For NFT, it's `ERC721 + batch transfer of tokens (with different ids)`.
+* very helpful for games, where a user buying weapons of different type (or id) which is gettting transferred at a time (i.e. batch transfer).
+* allows you to create Fungible, Non-Fungible, and Semi-Fungible in one single token standard. Both Fungible and Non-Fungible tokens can be created using the same standard.
+* Every token `id` has a balance & owner (could be creator or holder).
+* coded as:
+```
+// mapping(id => owner)
+mapping(uint256 => address) _owners;
+// mapping(owner => balances)
+mapping(address => uint256) private _balances;
+```
+* E.g. 
+	- There is one Mona Lisa artwork, which is worth millions of dollars and can be represented by __Non-Fungible ERC-1155__. Now there can also be several other copies of the artwork, which can be sold as __Fungible ERC1155__. The ERC1155 gives accessibility, simplicity, and efficiency on the buyer side.
+	- In games, you earn _points_ and buy _items_ using these points in a game. At the same time, you can exchange items too. The “items” can be represented by __Non-Fungible ERC-1155__ and “points” can be represented as __Fungible ERC-1155__.
 
 
 ### Token/Asset ID
 * Generating token/asset id(s) can be done in 2 ways:
-	- __on-chain__: Using blocknumber, timestamp, global counter. The digit has to be long so as to support more different NFT assets.
+	- __on-chain__:
+		+ sequential or non-dynamic: 
+			- pseudo random id: Using blocknumber, timestamp, global counter. The digit has to be long so as to support more different NFT assets.
+			- pure random: Using Chainlink VRF Oracle based service.
 	- __off-chain__: generated outside smart contract & then parsed into the NFT creation function of contract.
 
 
 
 
 ## References
+* [ERC721 NFT Token Standard Explained](https://www.youtube.com/watch?v=QFYU81zM_jA)
+* [ERC1155 NFT Token Standard - Explained](https://www.youtube.com/watch?v=XNWd8Nl3rhA)
 * [Ultimate NFT Programming Tutorial - FULL COURSE](https://youtu.be/tBMk1iZa85Y)
 * [How to Make an NFT and Render it on the OpenSea Marketplace](https://www.freecodecamp.org/news/how-to-make-an-nft-and-render-on-opensea-marketplace/)
 * [Build, Deploy, and Sell Your Own Dynamic NFT | Chainlink](https://blog.chain.link/build-deploy-and-sell-your-own-dynamic-nft/)
 * [ERC-1155 proposal](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md)
 * [Create a Complete NFT App - Smart contract, Backend, Frontend](https://www.youtube.com/watch?v=WsZyb2T83lo)
 * [Developing on OpenSea | Full Guide For Developers](https://www.youtube.com/watch?v=p88ZiBKejTY)
+* [Token Standards: ERC20 vs ERC721 vs ERC1155](https://medium.com/coinmonks/token-standards-erc20-vserc721-vs-erc1155-3106f1e3f2f3)
