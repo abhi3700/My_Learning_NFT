@@ -97,6 +97,8 @@ mapping(address => uint256) private _balances;
 * For NFT, it's `ERC721 + batch transfer of tokens (with different ids)`.
 * very helpful for games, where a user buying weapons of different type (or id) which is gettting transferred at a time (i.e. batch transfer).
 * allows you to create Fungible, Non-Fungible, and Semi-Fungible in one single token standard. Both Fungible and Non-Fungible tokens can be created using the same standard.
+* The distinctive feature of ERC1155 is that it uses a single smart contract to represent multiple tokens at once. This is why its balanceOf function differs from ERC20’s and ERC777’s: it has an additional id argument for the identifier of the token that you want to query the balance of.
+* This is similar to how ERC721 does things, but in that standard a token id has no concept of balance: each token is non-fungible and exists or doesn’t. The ERC721 balanceOf function refers to how many different tokens an account has, not how many of each. On the other hand, in ERC1155 accounts have a distinct balance for each token id, and non-fungible tokens are implemented by simply minting a single one of them.
 * Every token `id` has a balance & owner (could be creator or holder).
 * coded as:
 ```
@@ -105,6 +107,9 @@ mapping(uint256 => address) _owners;
 // mapping(owner => balances)
 mapping(address => uint256) private _balances;
 ```
+* This approach leads to massive gas savings for projects that require multiple tokens. Instead of deploying a new contract for each token type, a single ERC1155 token contract can hold the entire system state, reducing deployment costs and complexity.
+* Because all state is held in a single contract, it is possible to operate over multiple tokens in a single transaction very efficiently. The standard provides two functions, balanceOfBatch and safeBatchTransferFrom, that make querying multiple balances and transferring multiple tokens simpler and less gas-intensive.
+* In the spirit of the standard, we’ve also included batch operations in the non-standard functions, such as _mintBatch.
 * E.g. 
 	- There is one Mona Lisa artwork, which is worth millions of dollars and can be represented by __Non-Fungible ERC-1155__. Now there can also be several other copies of the artwork, which can be sold as __Fungible ERC1155__. The ERC1155 gives accessibility, simplicity, and efficiency on the buyer side.
 	- In games, you earn _points_ and buy _items_ using these points in a game. At the same time, you can exchange items too. The “items” can be represented by __Non-Fungible ERC-1155__ and “points” can be represented as __Fungible ERC-1155__.
@@ -122,12 +127,16 @@ mapping(address => uint256) private _balances;
 
 
 ## References
-* [ERC721 NFT Token Standard Explained](https://www.youtube.com/watch?v=QFYU81zM_jA)
-* [ERC1155 NFT Token Standard - Explained](https://www.youtube.com/watch?v=XNWd8Nl3rhA)
-* [Ultimate NFT Programming Tutorial - FULL COURSE](https://youtu.be/tBMk1iZa85Y)
+### Articles
 * [How to Make an NFT and Render it on the OpenSea Marketplace](https://www.freecodecamp.org/news/how-to-make-an-nft-and-render-on-opensea-marketplace/)
 * [Build, Deploy, and Sell Your Own Dynamic NFT | Chainlink](https://blog.chain.link/build-deploy-and-sell-your-own-dynamic-nft/)
 * [ERC-1155 proposal](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md)
+* [Token Standards: ERC20 vs ERC721 vs ERC1155](https://medium.com/coinmonks/token-standards-erc20-vserc721-vs-erc1155-3106f1e3f2f3)
+
+### Videos
 * [Create a Complete NFT App - Smart contract, Backend, Frontend](https://www.youtube.com/watch?v=WsZyb2T83lo)
 * [Developing on OpenSea | Full Guide For Developers](https://www.youtube.com/watch?v=p88ZiBKejTY)
-* [Token Standards: ERC20 vs ERC721 vs ERC1155](https://medium.com/coinmonks/token-standards-erc20-vserc721-vs-erc1155-3106f1e3f2f3)
+* [ERC721 NFT Token Standard Explained](https://www.youtube.com/watch?v=QFYU81zM_jA)
+* [ERC1155 NFT Token Standard - Explained](https://www.youtube.com/watch?v=XNWd8Nl3rhA)
+* [Ultimate NFT Programming Tutorial - FULL COURSE](https://youtu.be/tBMk1iZa85Y)
+* [Building a Full Stack NFT Marketplace on Ethereum with Polygon](https://dev.to/dabit3/building-scalable-full-stack-apps-on-ethereum-with-polygon-2cfb)
