@@ -11,6 +11,9 @@ Learn everything about NFT
 * When someone transfers NFT to someone, unlike FT where they just have to know the contract address, here they shall have to know both
 	- nft contract address
 	- nft token id
+* The NFT image can be copied, but the token_id is unique.
+* The NFT asset qty would be increased when the Blockchain is split (like hard fork).
+* The token id link to image can be modified when the NFT asset's image is updated.
 
 ### Metadata
 * All NFTs have what’s called metadata. Each `tokenId` has a specific `tokenURI` that defines this API call, which returns a JSON object that looks something like this:
