@@ -112,6 +112,7 @@ mapping(address => uint256) private _balances;
 ```
 * This approach leads to massive gas savings for projects that require multiple tokens. Instead of deploying a new contract for each token type, a single ERC1155 token contract can hold the entire system state, reducing deployment costs and complexity.
 * Because all state is held in a single contract, it is possible to operate over multiple tokens in a single transaction very efficiently. The standard provides two functions, balanceOfBatch and safeBatchTransferFrom, that make querying multiple balances and transferring multiple tokens simpler and less gas-intensive.
+* All NFTs (created by diff. entity) stored in same URI in ERC1155, unlike in ERC721, where URI has to be parsed during minting. That's why there is no URI required in ERC1155 minting.
 * In the spirit of the standard, we’ve also included batch operations in the non-standard functions, such as _mintBatch.
 * E.g. 
 	- There is one Mona Lisa artwork, which is worth millions of dollars and can be represented by __Non-Fungible ERC-1155__. Now there can also be several other copies of the artwork, which can be sold as __Fungible ERC1155__. The ERC1155 gives accessibility, simplicity, and efficiency on the buyer side.
