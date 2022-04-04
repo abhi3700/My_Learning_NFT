@@ -19,10 +19,10 @@ A IPFS cloud service provider for NFT asset storage.
 6. Paste the **PinataAPIKey** and the **SecretAPIKey** into `.env` file created at the root of the project i.e. where `package.json` file is present.
 7. `$ mkdir img`: Create a `img/` folder & paste some images inside this.
 8. `$ mkdir scripts`: Create a `scripts/` folder & add `pinToIPFS.js` script file for uploading the images.
-9. Run `$ node scripts/pinToIPFS.js` at the root of `pin-to-ipfs` project directory & get this output & all the hashes is stored in `hashes.json`
+9. Run `$ node scripts/pinImgToIPFS.js` at the root of `pin-to-ipfs` project directory & get this output & all the hashes is stored in `hashes.json`
 
 ```console
-❯ node scripts/pinToIPFS.js && code hashes.json
+❯ node scripts/pinImgToIPFS.js && code hashes.json
 Pinning to Pinata...
         IPFS CID: QmUX9iy6yZbuMokeRXwawuGQCphhHjZqYGyHK4HwHcmPzg
 Pinning to Pinata...
@@ -45,6 +45,7 @@ Pinning to Pinata...
         IPFS CID: QmUJJBbyE7VLkRWw8hSzg7B49NWAwKsJbvRfz7FUQzEaga
 Data written to file
 ```
+
 10. View all the hashes here:
 
 ```json
