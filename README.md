@@ -1,16 +1,17 @@
 # My_Learning_NFT
+
 Learn everything about NFT
 
 ## About
 * Learn about token standard like ERC721, ERC1155.
 * Learn about marketplaces like Opensea, Rarible, etc. Where they charge fees.
-	- They mostly charge fees where there is a transaction sent on blockchain for any activity.
+  - They mostly charge fees where there is a transaction sent on blockchain for any activity.
 * NFTs (Non-Fungible Tokens) can be summed up with one word: "unique". These are smart contracts deployed on a blockchain that represent something unique.
 * Unlike FT, Non-fungible tokens have token ids. Fungible tokens (FT) are all identical.
 * Unlike ERC20 standard which has 1 token type/id, the ERC721 has many token types/ids.
 * When someone transfers NFT to someone, unlike FT where they just have to know the contract address, here they shall have to know both
-	- nft contract address
-	- nft token id
+  - nft contract address
+  - nft token id
 * The NFT image can be copied, but the token_id is unique.
 * The NFT asset qty would be increased when the Blockchain is split (like hard fork).
 * The token id link to image can be modified when the NFT asset's image is updated.
@@ -26,17 +27,17 @@ Learn everything about NFT
 }
 ```
 * You’ll notice the metadata has four distinct keys.
-	- _name_ which defines the tokenIds human-readable name
-	- _description_ which gives some background information on the token
-	- _image_ which is another URI to an image
-	- _attributes_ which allow you to display the stats of your token
+  - _name_ which defines the tokenIds human-readable name
+  - _description_ which gives some background information on the token
+  - _image_ which is another URI to an image
+  - _attributes_ which allow you to display the stats of your token
 
 > It’s important that if your NFT interacts with other NFTs to make sure that the attributes on the `tokenURI` match the attributes of your NFT smart contract, otherwise you may get confused when battles or interactions don’t pan out as expected!
 
 ### Storage
 * The NFT assets (in image, gif, video formats) is stored in IPFS cloud:
-	- Centralized: [Pinata](https://www.pinata.cloud/), [Moralis](https://docs.moralis.io/moralis-server/files/ipfs).
-	- Decentralized: [Arweave](https://github.com/ArweaveTeam/arweave-deploy#deploy-a-file).
+  - Centralized: [Pinata](https://www.pinata.cloud/), [Moralis](https://docs.moralis.io/moralis-server/files/ipfs).
+  - Decentralized: [Arweave](https://github.com/ArweaveTeam/arweave-deploy#deploy-a-file).
 * Problem of storing data on-chain:
 
 > Basically, what the community found out was that storing images is really taxing and expensive to do on Ethereum. If you want to store a 8 x 8 picture, storing this much data is pretty cheap, but if you want a picture with decent resolution, you’ll need to spend a lot more.
@@ -46,6 +47,7 @@ Learn everything about NFT
 * Storing metadata on-chain & off-chain: The _name_, _description_, and _attributes_ are easy to store on-chain, but the _image_ is the hard part. It would be better if we could store our images on-chain so that they can’t go down or get hacked. That's why __IPFS__. This is to ensure the NFT asset with image is not duplicated elsewhere. And this is ensured by creating a hash based on the image & directed to a link of IPFS like `https://ipfs.io/ipfs/QmTgqnhFBMkfT9s8PHKcdXBn1f5bG3Q5hmBaR4U6hoTvb1?filename=Chainlink_Elf.png`. This is ideal for storing images since it means that every time the image is updated, the on-chain hash/tokenURI also has to change, meaning that we can have a record of the history of the metadata. It’s also really easy to add an image onto IPFS and doesn’t require running a server!
 
 ## Marketplace
+
 This is an example where the technicality will be explained:
 
 * Whenever a user creates an NFT, it gets created with one standard like ERC721.
@@ -54,6 +56,7 @@ This is an example where the technicality will be explained:
 	2. Minting is allowed after the NFT creation. Meaning additional no. can be generated based on the requirement of market. E.g. items on Amazon marketplace gets created when there is a demand from the customer.
 
 ### Opensea
+
 * No fees for
 	- creating account (just login using Metamask wallet)
 	- setting up profile with username, account name, email address.
@@ -67,13 +70,13 @@ This is an example where the technicality will be explained:
 ![nft_app_architecture](./img/nft_app_architecture.png)
 
 * Any NFT platform has 3 parts:
-	1. Front-end
-	1. Smart contract
-		- stores the token id
-		- stores the metadata URL
-	1. Backend
-		- stores the metadata like name, description, image (which stores the IPFS url), attributes.
-		- stores the asset in IPFS cloud
+  1. Front-end
+  1. Smart contract
+     - stores the token id
+     - stores the metadata URL
+  1. Backend
+     - stores the metadata like name, description, image (which stores the IPFS url), attributes.
+     - stores the asset in IPFS cloud
 * In programming, an NFT is not an image or a gif, it’s a number that has the owner a wallet.
 * And the no. is managed.
 * E.g. In this url - `https://opensea.io/assets/0x80a4b80c653112b789517eb28ac111519b608b19/6236`, NFT is the number `6236`.
@@ -127,10 +130,6 @@ mapping(address => uint256) private _balances;
 			- pure random: Using Chainlink VRF Oracle based service.
 	- __off-chain__: generated outside smart contract & then parsed into the NFT creation function of contract.
 
-
-
-
-## References
 ### Websites
 * [NFT School](https://nftschool.dev/)
 
