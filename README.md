@@ -43,6 +43,7 @@ Learn everything about NFT
 > It’s important that if your NFT interacts with other NFTs, make sure that the attributes on the `tokenURI` match the attributes of your NFT smart contract, otherwise you may get confused when battles or interactions don’t pan out as expected!
 
 ### Storage
+
 * The NFT assets (in image, gif, video formats) is stored in IPFS cloud:
   - Centralized: [Pinata](https://www.pinata.cloud/), [Moralis](https://docs.moralis.io/moralis-server/files/ipfs).
   - Decentralized: [Arweave](https://github.com/ArweaveTeam/arweave-deploy#deploy-a-file).
@@ -99,20 +100,25 @@ This is an example where the technicality will be explained:
     + the base URI: `https://api.cryptocannabisclub.com/metadata/1`
 
 ### Standards
-#### ERC721
+
+#### EVM
+
+##### ERC721
 
 * Unlike `ERC20`, `ERC721` lacks a decimals field, since each token is distinct and cannot be partitioned.
 * cons:
-	- Every token `id` has a balance of `1` (by default) & owner (could be creator or holder).
+  * Every token `id` has a balance of `1` (by default) & owner (could be creator or holder).
 * coded as:
-```
+
+```c
 // mapping(id => owner)
 mapping(uint256 => address) _owners;
 // mapping(owner => balances)
 mapping(address => uint256) private _balances;
 ```
 
-#### ERC1155: inspired from ERC20, ERC777, ERC721.
+##### ERC1155: inspired from ERC20, ERC777, ERC721.
+
 * For NFT, it's `ERC721 + batch transfer of tokens (with different ids)`.
 * very helpful for games, where a user buying weapons of different type (or id) which is gettting transferred at a time (i.e. batch transfer).
 * allows you to create Fungible, Non-Fungible, and Semi-Fungible in one single token standard. Both Fungible and Non-Fungible tokens can be created using the same standard.
@@ -120,22 +126,39 @@ mapping(address => uint256) private _balances;
 * This is similar to how ERC721 does things, but in that standard a token id has no concept of balance: each token is non-fungible and exists or doesn’t. The ERC721 balanceOf function refers to how many different tokens an account has, not how many of each. On the other hand, in ERC1155 accounts have a distinct balance for each token id, and non-fungible tokens are implemented by simply minting a single one of them.
 * Every token `id` has a balance & owner (could be creator or holder).
 * coded as:
-```
+
+```c
 // mapping(id => owner)
 mapping(uint256 => address) _owners;
 // mapping(owner => balances)
 mapping(address => uint256) private _balances;
 ```
+
 * This approach leads to massive gas savings for projects that require multiple tokens. Instead of deploying a new contract for each token type, a single ERC1155 token contract can hold the entire system state, reducing deployment costs and complexity.
 * Because all state is held in a single contract, it is possible to operate over multiple tokens in a single transaction very efficiently. The standard provides two functions, balanceOfBatch and safeBatchTransferFrom, that make querying multiple balances and transferring multiple tokens simpler and less gas-intensive.
 * All NFTs (created by diff. entity) stored in same URI in ERC1155, unlike in ERC721, where URI has to be parsed during minting. That's why there is no URI required in ERC1155 minting.
 * In the spirit of the standard, we’ve also included batch operations in the non-standard functions, such as _mintBatch.
-* E.g. 
+* E.g.
 	- There is one Mona Lisa artwork, which is worth millions of dollars and can be represented by __Non-Fungible ERC-1155__. Now there can also be several other copies of the artwork, which can be sold as __Fungible ERC1155__. The ERC1155 gives accessibility, simplicity, and efficiency on the buyer side.
 	- In games, you earn _points_ and buy _items_ using these points in a game. At the same time, you can exchange items too. The “items” can be represented by __Non-Fungible ERC-1155__ and “points” can be represented as __Fungible ERC-1155__.
 
+#### AtomicAssets: EOSIO NFT standard
+
+![nft table format on WAX](img/eosio_nft_format.png)
+
+* The NFT asset (img, gif, vid) is stored on IPFS based services (centralized like Pinata, Moralis or decentralized storage like Filecoin, Arweave targetting for permanence).
+* the metadata is stored on-chain, unlike in EVM NFT case, where most of the times the metadata is stored off-chain on some traditional cloud or IPFS.
+  - in JSON string format in one of the columns of TABLE.
+* the id is also stored in the TABLE
+* There are different functions for mint, transfer, balanceOf, etc..
+* For more, check [this](https://github.com/pinknetworkx/atomicassets-contract/wiki)
+
+#### Solana
+
+<!-- TODO -->
 
 ### Token/Asset ID
+
 * Generating token/asset id(s) can be done in 2 ways:
 	- __on-chain__:
 		+ sequential or non-dynamic: 
@@ -144,15 +167,18 @@ mapping(address => uint256) private _balances;
 	- __off-chain__: generated outside smart contract & then parsed into the NFT creation function of contract.
 
 ### Websites
+
 * [NFT School](https://nftschool.dev/)
 
 ### Articles
+
 * [How to Make an NFT and Render it on the OpenSea Marketplace](https://www.freecodecamp.org/news/how-to-make-an-nft-and-render-on-opensea-marketplace/)
 * [Build, Deploy, and Sell Your Own Dynamic NFT | Chainlink](https://blog.chain.link/build-deploy-and-sell-your-own-dynamic-nft/)
 * [ERC-1155 proposal](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1155.md)
 * [Token Standards: ERC20 vs ERC721 vs ERC1155](https://medium.com/coinmonks/token-standards-erc20-vserc721-vs-erc1155-3106f1e3f2f3)
 
 ### Videos
+
 * [Create a Complete NFT App - Smart contract, Backend, Frontend](https://www.youtube.com/watch?v=WsZyb2T83lo)
 * [Developing on OpenSea | Full Guide For Developers](https://www.youtube.com/watch?v=p88ZiBKejTY)
 * [ERC721 NFT Token Standard Explained](https://www.youtube.com/watch?v=QFYU81zM_jA)
