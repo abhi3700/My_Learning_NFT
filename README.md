@@ -3,36 +3,44 @@
 Learn everything about NFT
 
 ## About
+
 * Learn about token standard like ERC721, ERC1155.
-* Learn about marketplaces like Opensea, Rarible, etc. Where they charge fees.
-  - They mostly charge fees where there is a transaction sent on blockchain for any activity.
+* Learn about marketplaces like Opensea, Rarible, etc. where they charge fees.
+  - They mostly charge fees where there is a transaction sent on blockchain for any activity, not for signing in with web3 wallets like Metamask, etc.
 * NFTs (Non-Fungible Tokens) can be summed up with one word: "unique". These are smart contracts deployed on a blockchain that represent something unique.
 * Unlike FT, Non-fungible tokens have token ids. Fungible tokens (FT) are all identical.
-* Unlike ERC20 standard which has 1 token type/id, the ERC721 has many token types/ids.
+* Unlike ERC20 standard which has 1 token type/id, the ERC721 has many token types/ids. But, they can have same assets though. E.g. 2 NFTs (with different ids ofcourse) can have same image.
 * When someone transfers NFT to someone, unlike FT where they just have to know the contract address, here they shall have to know both
   - nft contract address
   - nft token id
+
+> * In case of FT, the token balance is known by just inputting the (token contract address) for a holder.
+> * Whereas in case of NFT, the token balance is known by inputting the (token contract address & token id) for a holder.
+
 * The NFT image can be copied, but the token_id is unique.
 * The NFT asset qty would be increased when the Blockchain is split (like hard fork).
-* The token id link to image can be modified when the NFT asset's image is updated.
+* The token id URL to image can be modified when the NFT asset's image is updated. Hence, the URI (which contains metadata) might also change depending on the attribute values.
 
 ### Metadata
+
 * All NFTs have what’s called metadata. Each `tokenId` has a specific `tokenURI` that defines this API call, which returns a JSON object that looks something like this:
+
 ```json
 {
-    "name": "You NFT token name",
+    "name": "Your NFT token name",
     "description": "Something Cool here",
     "image": "https://ipfs.io/ipfs/QmTgqnhFBMkfT9s8PHKcdXBn1f5bG3Q5hmBaR4U6hoTvb1?filename=Chainlink_Elf.png",
     "attributes": [...]
 }
 ```
-* You’ll notice the metadata has four distinct keys.
-  - _name_ which defines the tokenIds human-readable name
-  - _description_ which gives some background information on the token
-  - _image_ which is another URI to an image
-  - _attributes_ which allow you to display the stats of your token
 
-> It’s important that if your NFT interacts with other NFTs to make sure that the attributes on the `tokenURI` match the attributes of your NFT smart contract, otherwise you may get confused when battles or interactions don’t pan out as expected!
+* You’ll notice the metadata has four distinct keys.
+  - **_name_**: which defines the tokenIds human-readable name
+  - **_description_**: which gives some background information on the token
+  - **_image_**: which is another URL to an image
+  - **_attributes_**: which allow you to display the stats of your token in terms of what properties it has.
+
+> It’s important that if your NFT interacts with other NFTs, make sure that the attributes on the `tokenURI` match the attributes of your NFT smart contract, otherwise you may get confused when battles or interactions don’t pan out as expected!
 
 ### Storage
 * The NFT assets (in image, gif, video formats) is stored in IPFS cloud:
@@ -40,11 +48,12 @@ Learn everything about NFT
   - Decentralized: [Arweave](https://github.com/ArweaveTeam/arweave-deploy#deploy-a-file).
 * Problem of storing data on-chain:
 
-> Basically, what the community found out was that storing images is really taxing and expensive to do on Ethereum. If you want to store a 8 x 8 picture, storing this much data is pretty cheap, but if you want a picture with decent resolution, you’ll need to spend a lot more.
+> Basically, what the community found out was that storing images is really taxing and expensive to do on Ethereum. If you want to store a `8px x 8px` picture, storing this much data is pretty cheap, but if you want a picture with decent resolution, you’ll need to spend a lot more.
 
 > The cost of data storage is (about) 640k gas per Kb of data. If the current gas price is approximately 50 Gwei or 0.000000050 ETH, and 1 ETH equals $600 presently, you’ll be spending $20. $20 to add that to the blockchain. This didn’t really excite NFT creators.
 
 * Storing metadata on-chain & off-chain: The _name_, _description_, and _attributes_ are easy to store on-chain, but the _image_ is the hard part. It would be better if we could store our images on-chain so that they can’t go down or get hacked. That's why __IPFS__. This is to ensure the NFT asset with image is not duplicated elsewhere. And this is ensured by creating a hash based on the image & directed to a link of IPFS like `https://ipfs.io/ipfs/QmTgqnhFBMkfT9s8PHKcdXBn1f5bG3Q5hmBaR4U6hoTvb1?filename=Chainlink_Elf.png`. This is ideal for storing images since it means that every time the image is updated, the on-chain hash/tokenURI also has to change, meaning that we can have a record of the history of the metadata. It’s also really easy to add an image onto IPFS and doesn’t require running a server!
+* But, the dangerous part is that we might not have the IPFS img stored permanently as it is again centralized IPFS cloud. So, in order to make the IPFS img data permanent, **Arweave** should be used.
 
 ## Marketplace
 
@@ -52,18 +61,18 @@ This is an example where the technicality will be explained:
 
 * Whenever a user creates an NFT, it gets created with one standard like ERC721.
 * Thereafter the minting right of the token is reserved with the creator. Now, minting process can be of 2 types:
-	1. Minting __NOT__ allowed after the NFT creation. Meaning the no. which is minted during the creation of a token type/id is final.
-	2. Minting is allowed after the NFT creation. Meaning additional no. can be generated based on the requirement of market. E.g. items on Amazon marketplace gets created when there is a demand from the customer.
+  1. Minting is **NOT** allowed after the NFT creation. Meaning the no. which is minted during the creation of a token type/id is final.
+  2. Minting is allowed after the NFT creation. Meaning additional no. can be generated based on the requirement of market. E.g. items on Amazon marketplace gets created when there is more demand for the same item from the customer(s).
 
 ### Opensea
 
 * No fees for
-	- creating account (just login using Metamask wallet)
-	- setting up profile with username, account name, email address.
-	- creating collection (contains NFT assets)
-	- creating item with upload NFT asset (img, gif, vid), set mint qty, set price mode (fixed, bidding, bundle), select payment currency.
+  * creating account (just login using Metamask wallet) [Just signature]
+  * setting up profile with username, account name, email address. [Off-chain]
+  * creating collection (contains NFT assets) [Off-chain]
+  * creating item with upload NFT asset (img, gif, vid), set mint qty, set price mode (fixed, bidding, bundle), select payment currency. [Asset img/gif/video upload into IPFS is made FREE]
 * Fees for
-	- Sell items i.e. pressing a sell button & signature using private key via Metamask type wallets.
+  * Sell items i.e. pressing a sell button & signature using private key via Web3 wallets like Metamask.
 
 ## Coding
 
@@ -77,18 +86,22 @@ This is an example where the technicality will be explained:
   1. Backend
      - stores the metadata like name, description, image (which stores the IPFS url), attributes.
      - stores the asset in IPFS cloud
-* In programming, an NFT is not an image or a gif, it’s a number that has the owner a wallet.
+* In programming, an NFT is not an image or a gif, it’s a number that has the owner with address.
 * And the no. is managed.
 * E.g. In this url - `https://opensea.io/assets/0x80a4b80c653112b789517eb28ac111519b608b19/6236`, NFT is the number `6236`.
-* The Smart contracts handling the ownership of the NFTs are ERC721 and ERC1155.
+* The Smart contracts handling the ownership of the NFTs are of standards - `ERC721` and `ERC1155`.
 * In the smart contract there’s a function called tokenURI (or uri for ERC1155) , that base URI must be public and starts with `https://` or `ipfs://`
 * for example for the above NFT `6236` the smart contract is is located here `https://etherscan.io/address/0x80a4b80c653112b789517eb28ac111519b608b19` has the token URI `https://api.cryptocannabisclub.com/metadata/6236`
 * The base URI: `https://api.cryptocannabisclub.com/metadata/`
 * In order to get the token URI just append the token id with the base URI. E.g:
-	- For `1` token id, the base URI: `https://api.cryptocannabisclub.com/metadata/1`
+  - For `1` NFT id,
+    + the smart contract address: `0x80a4b80c653112b789517eb28ac111519b608b19`
+    + the base URI: `https://api.cryptocannabisclub.com/metadata/1`
 
 ### Standards
 #### ERC721
+
+* Unlike `ERC20`, `ERC721` lacks a decimals field, since each token is distinct and cannot be partitioned.
 * cons:
 	- Every token `id` has a balance of `1` (by default) & owner (could be creator or holder).
 * coded as:
