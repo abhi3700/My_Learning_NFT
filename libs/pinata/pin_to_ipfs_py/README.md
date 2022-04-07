@@ -1,6 +1,6 @@
 # Pinata
 
-A IPFS cloud service provider for NFT asset storage.
+A IPFS cloud service provider for NFT asset storage using Python.
 
 ## Task
 
@@ -13,7 +13,7 @@ A IPFS cloud service provider for NFT asset storage.
    - Make sure the Admin button is selected to have access to all Pinata endpoints.
    - Copy the **PinataAPIKey** and the **SecretAPIKey** to your clipboard. We will be using this later.
 
-3. `$ mkdir pin-to-ipfs && cd pin-to-ipfs`: Create folder & switch to folder
+<!-- 3. `$ mkdir pin-to-ipfs && cd pin-to-ipfs`: Create folder & switch to folder
 4. `$ npm init -y`: create `package.json` file inside the folder.
 5. `$ npm i --save-dev @pinata/sdk dotenv`: install pinata dependency package for this task.
 6. Paste the **PinataAPIKey** and the **SecretAPIKey** into `.env` file created at the root of the project i.e. where `package.json` file is present.
@@ -64,4 +64,4 @@ $ code hashes.json
 ]
 ```
 
-11. DONE ✅
+11. DONE ✅ -->
