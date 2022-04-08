@@ -1,10 +1,18 @@
-# Pinata
+# Generative NFT art
 
-A IPFS cloud service provider for NFT asset storage using Python.
+Create generative art as NFT
 
 ## Task
 
-* Here, some images would be uploaded into Pinata cloud (IPFS based).
+1. Create your own NFT collection
+> - Here, the arts would be generated based on multiple layers/features/traits - face, eyes, ears, nose, mouth
+> - The method followed is completely algorithmic using random trait generation.
+<!-- TODO: There is another method which is based on AI -->
+2. Create NFT metadata
+> Here, images & its metadata would be uploaded into Pinata cloud (IPFS based).
+
+3. Deploy NFT SC
+4. Mint NFT
 
 ## Coding
 
