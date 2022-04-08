@@ -4,6 +4,9 @@ Learn everything about NFT
 
 ## About
 
+* Entire procedure about making an art as NFT is picturized below:
+![Full NFT creation procedure](img/nft_full_procedure.jpg)
+
 * Learn about token standard like ERC721, ERC1155.
 * Learn about marketplaces like Opensea, Rarible, etc. where they charge fees.
   - They mostly charge fees where there is a transaction sent on blockchain for any activity, not for signing in with web3 wallets like Metamask, etc.

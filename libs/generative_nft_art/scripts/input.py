@@ -1,1 +1,0 @@
-TOTAL_IMAGES = 5        # Number of random unique images we want to generate
