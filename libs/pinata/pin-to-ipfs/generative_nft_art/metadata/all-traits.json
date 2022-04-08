@@ -1,0 +1,47 @@
+[
+    {
+        "Face": "White",
+        "Ears": "Right Earring",
+        "Eyes": "Focused",
+        "Hair": "Orange Hair",
+        "Mouth": "Teeth Smile",
+        "Nose": "Nose",
+        "tokenId": 0
+    },
+    {
+        "Face": "White",
+        "Ears": "No Earring",
+        "Eyes": "Focused",
+        "Hair": "Mohawk",
+        "Mouth": "Big Smile",
+        "Nose": "Nose Ring",
+        "tokenId": 1
+    },
+    {
+        "Face": "White",
+        "Ears": "No Earring",
+        "Eyes": "Regular",
+        "Hair": "Bubble Hair",
+        "Mouth": "Purple Lipstick",
+        "Nose": "Nose",
+        "tokenId": 2
+    },
+    {
+        "Face": "White",
+        "Ears": "Left Earring",
+        "Eyes": "Regular",
+        "Hair": "Orange Hair",
+        "Mouth": "Big Smile",
+        "Nose": "Nose",
+        "tokenId": 3
+    },
+    {
+        "Face": "White",
+        "Ears": "No Earring",
+        "Eyes": "Regular",
+        "Hair": "Red Mohawk",
+        "Mouth": "Teeth Smile",
+        "Nose": "Nose",
+        "tokenId": 4
+    }
+]

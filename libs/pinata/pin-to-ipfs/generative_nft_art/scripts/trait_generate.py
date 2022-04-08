@@ -51,6 +51,13 @@ def all_images_unique(all_images):
     return not any(i in seen or seen.append(i) for i in all_images)
 
 
+# Get attribute
+def getAttribute(key, value):
+    return {
+        'trait_type': key,
+        'value': value
+    }
+
 # =============================MAIN===========================
 def main():
     # ----------------------------------------------------------
@@ -219,6 +226,61 @@ def main():
         file_name = str(image["tokenId"]) + ".png"
         rgb_im.save(img_output_path + file_name)
 
+    # ==================================Generating the metadata========================
+    # generate 1 metadata file for all images
+    mdata_output_path = '../metadata/'
+    if not os.path.exists(mdata_output_path):
+        os.mkdir(f'{mdata_output_path}')
+    
+    METADATA_FILE_NAME = mdata_output_path + 'all-traits.json'
+    
+    with open(METADATA_FILE_NAME, 'w') as outfile:
+        json.dump(all_images, outfile, indent=4)
+    
+    # ---------------------------------------------------------------------------------
+    # generate many metadata files for each image
+    """
+    [token_id].json
 
+    Next, you want to create a specific .json file for each image:
+    - load in the all_traits.json
+    - Specify your images “BASE URL” which you copied earlier on the Pinata website. Make sure you add an additional “/” on the end!
+    - Specify your project name
+    - Loop over the `all_traits .json` dictionary using the keys accessor and output an individual .json file for each unique NFT image.
+    """
+    
+    f = open('../metadata/all-traits.json', 'r')
+    data = json.load(f)
+    
+    # Changes this IMAGES_BASE_URL to yours
+    IMAGES_BASE_URL = "https://gateway.pinata.cloud/ipfs/"
+    PROJECT_NAME = "Auto_Generative_NFT_Art"
+    
+    for i in data:
+        token_id = i['tokenId']
+        token = {
+            # TODO: change this 'image' data when uploading the img via "pinImgToIPFS.js" script.
+            # Reference: https://medium.com/@chrisgarrett/ipfs-in-python-13f8f27e0625
+            "image": IMAGES_BASE_URL + str(token_id) + '.png',
+            "tokenId": token_id,
+            "name": PROJECT_NAME + ' ' + str(token_id),
+            "attributes": []
+        }
+        
+        token['attributes'].append(getAttribute("Face", i["Face"]))
+        token['attributes'].append(getAttribute("Ears", i["Ears"]))
+        token['attributes'].append(getAttribute("Eyes", i["Eyes"]))
+        token['attributes'].append(getAttribute("Hair", i["Hair"]))
+        token['attributes'].append(getAttribute("Mouth", i["Mouth"]))
+        token['attributes'].append(getAttribute("Nose", i["Nose"]))
+
+        with open("../metadata/" + str(token_id) + ".json", 'w') as outfile:
+            json.dump(token, outfile, indent=4)
+    
+    # close "all-traits.json" file
+    f.close()
+
+
+# Main function
 if __name__ == "__main__":
     main()
