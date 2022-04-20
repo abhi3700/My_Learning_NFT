@@ -41,12 +41,17 @@ Read [more](https://medium.com/@datash/an-introduction-to-generative-art-nfts-35
 
 Here, we have the different layers/traits/features (in folder - "./img/face_parts") needed for generating unique art.
 
-### Part A: Generate images & metadata
+### Part A: Generate images & metadata (Using Python)
+
+> This part can be attempted in other languages as well.
 
 1. Installed the required packages using `$ pip3 install -r requirements.txt`
 2. Go to directory - "./scripts/" & then run `$ python3 trait_generate.py` & find the output image files in the "../img/output/" folder & metadata files in the "../metadata/" folder
 
-### Part B: Upload images & metadata
+### Part B: Upload images & metadata (Using JS)
+
+> - This part can be done using python as there is an unofficial python lib for Pinata: <https://pypi.org/project/pinatapy-vourhey/> which is not updated since 2020.
+> - So, this part has been done using NodeJS lib for Pinata: <https://www.npmjs.com/package/@pinata/sdk> which is maintained officially on a regular basis.
 
 1. Sign up for Pinata [here](https://www.pinata.cloud/)
 2. Generate an API Key [here](https://app.pinata.cloud/keys)
@@ -131,4 +136,3 @@ $ code metadata_hashes.json
 ```
 
 13. Now, all the images & its metadata are uploaded into Pinata cloud. DONE ✅
-

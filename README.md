@@ -23,6 +23,8 @@ Learn everything about NFT
 * The NFT image can be copied, but the token_id is unique.
 * The NFT asset qty would be increased when the Blockchain is split (like hard fork).
 * The token id URL to image can be modified when the NFT asset's image is updated. Hence, the URI (which contains metadata) might also change depending on the attribute values.
+* Visualize all about NFT
+![](./img/nft_all_about.jpeg)
 
 ### Metadata
 
