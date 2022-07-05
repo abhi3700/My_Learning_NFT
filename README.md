@@ -7,6 +7,35 @@ Learn everything about NFT
 - Entire procedure about making an art as NFT is picturized below:
   ![Full NFT creation procedure](img/nft_full_procedure.jpg)
 
+  1. Create an Art(s) (Manual, Automatic - Algorithm, AI)
+  2. Upload the art(s) into IPFS based network (centralized, decentralized).
+  3. Create metadata files like `1.json`, `2.json`, `3.json`,... with these & deploy each file into IPFS storage.
+     > This gives token URI for each NFT token/art.
+
+  ```json
+  {
+    "name": "Your NFT token name",
+    "description": "Your NFT token description",
+    "image": "Your deployed NFT token IPFS url",
+    "attributes": [
+      {
+        "trait_type": "Base",
+        "value": "Starfish"
+      },
+      {
+        "trait_type": "Eyes",
+        "value": "Big"
+      }
+      // ...
+      // ...
+    ]
+  }
+  ```
+
+  4. Deploy NFT SC with the obtained tokenURI for off-chain metadata storage into IPFS based network.
+     > This procedure is exclusively followed for EVM blockchains. But, for EOSIO blockchains, the tokenId metadata is stored off-chain, hence there is no need of token URI. but there is a need of token (image) URL.
+  5. Now, `mint`, `burn`, etc.
+
 - Learn about token standard like ERC721, ERC1155.
 - Learn about marketplaces like Opensea, Rarible, etc. where they charge fees.
   - They mostly charge fees where there is a transaction sent on blockchain for any activity, not for signing in with web3 wallets like Metamask, etc.
@@ -23,7 +52,7 @@ Learn everything about NFT
 - The NFT image can be copied, but the token_id is unique.
 - The NFT asset qty would be increased when the Blockchain is split (like hard fork).
 - The token id URL to image can be modified when the NFT asset's image is updated. Hence, the URI (which contains metadata) might also change depending on the attribute values.
-- Visualize all about NFT
+- Visualize all about NFT applications
   ![](./img/nft_all_about.jpeg)
 
 ### Metadata
@@ -32,10 +61,20 @@ Learn everything about NFT
 
 ```json
 {
-    "name": "Your NFT token name",
-    "description": "Something Cool here",
-    "image": "https://ipfs.io/ipfs/QmTgqnhFBMkfT9s8PHKcdXBn1f5bG3Q5hmBaR4U6hoTvb1?filename=Chainlink_Elf.png",
-    "attributes": [...]
+  "name": "Your NFT token name",
+  "description": "Something Cool here",
+  "image": "https://ipfs.io/ipfs/QmTgqnhFBMkfT9s8PHKcdXBn1f5bG3Q5hmBaR4U6hoTvb1?filename=Chainlink_Elf.png",
+  "attributes": [
+    {
+      "trait_type": "Base",
+      "value": "Starfish"
+    },
+    {
+      "trait_type": "Eyes",
+      "value": "Big"
+    }
+    // ...
+  ]
 }
 ```
 
@@ -46,6 +85,12 @@ Learn everything about NFT
   - **_attributes_**: which allow you to display the stats of your token in terms of what properties it has.
 
 > It’s important that if your NFT interacts with other NFTs, make sure that the attributes on the `tokenURI` match the attributes of your NFT smart contract, otherwise you may get confused when battles or interactions don’t pan out as expected!
+
+#### Standard
+
+Here is the details about the NFT metadata standard ([by OpenSea](https://docs.opensea.io/docs/metadata-standards)):
+
+![](img/opensea_metadata_standard.png)
 
 ### Storage
 
