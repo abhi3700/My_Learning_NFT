@@ -86,7 +86,7 @@ Data written to file
 9. View all the image hashes here:
 
 ```console
-$ code img_hashes.json
+$ cat img_hashes.json
 [
   "QmUX9iy6yZbuMokeRXwawuGQCphhHjZqYGyHK4HwHcmPzg",
   "QmWd2ijHubsHmAvvdttMTX3kmEVWNQ6eb2ntUkM3AURKLF",

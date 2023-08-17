@@ -248,6 +248,8 @@ mapping(address => mapping(uint256 => uint256)) public balanceOf;
 
 ### Videos
 
+- [How it Works: On chain vs. off chain NFT art](https://www.youtube.com/watch?v=nOfFeRZg9oE) ✅
+- [NFT Reveal in 2 mins](https://www.youtube.com/watch?v=7tve3SL7EWY) ✅
 - [Create a Complete NFT App - Smart contract, Backend, Frontend](https://www.youtube.com/watch?v=WsZyb2T83lo)
 - [Developing on OpenSea | Full Guide For Developers](https://www.youtube.com/watch?v=p88ZiBKejTY)
 - [ERC721 NFT Token Standard Explained](https://www.youtube.com/watch?v=QFYU81zM_jA)
