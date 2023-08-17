@@ -33,7 +33,7 @@ Learn everything about NFT
   ```
 
   4. Deploy NFT SC with the obtained tokenURI for off-chain metadata storage into IPFS based network.
-     > This procedure is exclusively followed for EVM blockchains. But, for EOSIO blockchains, the tokenId metadata is stored off-chain, hence there is no need of token URI. but there is a need of token (image) URL.
+     > This procedure is exclusively followed for EVM blockchains. But, for EOSIO blockchains, the tokenId metadata is stored on-chain, hence there is no need of token URI, but there is a need of token (image) URL.
   5. Now, `mint`, `burn`, etc.
 
 - Learn about token standard like ERC721, ERC1155.
@@ -139,9 +139,10 @@ This is an example where the technicality will be explained:
      - stores the asset in IPFS cloud
 - In programming, an NFT is not an image or a gif, it’s a number that has the owner with address.
 - And the no. is managed.
-- E.g. In this url - `https://opensea.io/assets/0x80a4b80c653112b789517eb28ac111519b608b19/6236`, NFT is the number `6236`.
+- E.g. In this asset url (in marketplace) - `https://opensea.io/assets/0x80a4b80c653112b789517eb28ac111519b608b19/6236`, NFT is the number `6236`.
 - The Smart contracts handling the ownership of the NFTs are of standards - `ERC721` and `ERC1155`.
 - In the smart contract there’s a function called tokenURI (or uri for ERC1155) , that base URI must be public and starts with `https://` or `ipfs://`
+  > There is no concept of `baseURI` in solmate lib, but just `tokenURI`. [Code](https://github.com/abhi3700/evm-sol-foundry/blob/main/src/MyNFT.sol)
 - for example for the above NFT `6236` the smart contract is is located here `https://etherscan.io/address/0x80a4b80c653112b789517eb28ac111519b608b19` has the token URI `https://api.cryptocannabisclub.com/metadata/6236`
 - The base URI: `https://api.cryptocannabisclub.com/metadata/`
 - In order to get the token URI just append the token id with the base URI. E.g:
@@ -156,41 +157,59 @@ This is an example where the technicality will be explained:
 ##### ERC721
 
 - Unlike `ERC20`, `ERC721` lacks a decimals field, since each token is distinct and cannot be partitioned.
+  > There is a concept of fractionalization. But, it's not a part of the standard.
 - cons:
-  - Every token `id` has a balance of `1` (by default) & owner (could be creator or holder).
+  - Every token `id` has a balance of `1` (by default) & owner (could be creator or holder). Hence, it doesn't make sense to get the balance of a token id for a holder, instead total balance of a holder makes more sense which includes all the owned token ids.
 - coded as:
 
-```c
-// mapping(id => owner)
-mapping(uint256 => address) _owners;
-// mapping(owner => balances)
+```solidity
+/// OpenZeppelin's ERC721.sol
+// id => owner
+mapping(uint256 => address) private _owners;
+// owner => balances
 mapping(address => uint256) private _balances;
+
+/// Solmate ERC721.sol
+// id => owner
+mapping(uint256 => address) internal _ownerOf;
+// owner => balances
+mapping(address => uint256) internal _balanceOf;
 ```
 
 ##### ERC1155: inspired from ERC20, ERC777, ERC721.
 
-- For NFT, it's `ERC721 + batch transfer of tokens (with different ids)`.
+- For this NFT standard, it's `ERC721 + batch transfer of tokens (with different ids)`.
 - very helpful for games, where a user buying weapons of different type (or id) which is gettting transferred at a time (i.e. batch transfer).
 - allows you to create Fungible, Non-Fungible, and Semi-Fungible in one single token standard. Both Fungible and Non-Fungible tokens can be created using the same standard.
-- The distinctive feature of ERC1155 is that it uses a single smart contract to represent multiple tokens at once. This is why its balanceOf function differs from ERC20’s and ERC777’s: it has an additional id argument for the identifier of the token that you want to query the balance of.
+- The distinctive feature of ERC1155 is that it uses a single smart contract to represent multiple tokens at once. This is why its `balanceOf` function differs from ERC20’s and ERC777’s: it has an additional `id` argument as the token identifier that you want to query the balance of a holder.
 - This is similar to how ERC721 does things, but in that standard a token id has no concept of balance: each token is non-fungible and exists or doesn’t. The ERC721 balanceOf function refers to how many different tokens an account has, not how many of each. On the other hand, in ERC1155 accounts have a distinct balance for each token id, and non-fungible tokens are implemented by simply minting a single one of them.
 - Every token `id` has a balance & owner (could be creator or holder).
 - coded as:
 
-```c
-// mapping(id => owner)
-mapping(uint256 => address) _owners;
-// mapping(owner => balances)
-mapping(address => uint256) private _balances;
+```solidity
+/// OpenZeppelin's ERC721.sol
+// id => owner
+mapping(uint256 => address) private _owners;
+// owner => uint256 => balances
+mapping(address mapping(uint256 => uint256)) private _balances;
+
+/// Solmate's ERC721.sol
+// NOTE: Here, owner of a token id can be checked based on zero balance like this: `balanceOf(alice, 1) == 0 ? "alice is not owner of token id 1" : "alice is owner of token id 1"`.
+// owner => uint256 => balances
+mapping(address => mapping(uint256 => uint256)) public balanceOf;
 ```
 
-- This approach leads to massive gas savings for projects that require multiple tokens. Instead of deploying a new contract for each token type, a single ERC1155 token contract can hold the entire system state, reducing deployment costs and complexity.
-- Because all state is held in a single contract, it is possible to operate over multiple tokens in a single transaction very efficiently. The standard provides two functions, balanceOfBatch and safeBatchTransferFrom, that make querying multiple balances and transferring multiple tokens simpler and less gas-intensive.
-- All NFTs (created by diff. entity) stored in same URI in ERC1155, unlike in ERC721, where URI has to be parsed during minting. That's why there is no URI required in ERC1155 minting.
-- In the spirit of the standard, we’ve also included batch operations in the non-standard functions, such as \_mintBatch.
+- This approach leads to massive gas savings for projects that require multiple collections (i.e. multiple copies of each token id). Instead of deploying a new contract for each token type, a single ERC1155 token contract can hold the entire system state, reducing deployment costs and complexity.
+- Because all state is held in a single contract, it is possible to operate over multiple tokens in a single transaction very efficiently. The standard provides two functions, `balanceOfBatch` and `safeBatchTransferFrom`, that make querying multiple balances and transferring multiple tokens simpler and less gas-intensive.
+- All NFT collections (created by diff. entity) are stored in same URI in ERC1155, unlike in ERC721, where URI has to be parsed during minting. That's why there is no URI required in ERC1155 minting.
+- In the spirit of the standard, we’ve also included batch operations in the non-standard functions, such as `_mintBatch`.
 - E.g.
-  - There is one Mona Lisa artwork, which is worth millions of dollars and can be represented by **Non-Fungible ERC-1155**. Now there can also be several other copies of the artwork, which can be sold as **Fungible ERC1155**. The ERC1155 gives accessibility, simplicity, and efficiency on the buyer side.
-  - In games, you earn _points_ and buy _items_ using these points in a game. At the same time, you can exchange items too. The “items” can be represented by **Non-Fungible ERC-1155** and “points” can be represented as **Fungible ERC-1155**.
+
+  - **Collection-1 with 1 token id with 1 qty/copy**: There is one Mona Lisa artwork collection, which is worth millions of dollars and can be represented as **Non-Fungible ERC-1155** to ensure rarity. Here, only 1 copy of the artwork with 1 image.
+  - **Collection-2 with 1 token id with n qty/copies**: Now there can also be several other copies of the artwork, which can be sold as **Fungible ERC1155**. The ERC1155 gives accessibility, simplicity, and efficiency on the buyer side. Here, there are n copies of the artwork with 1 image.
+  - **Collection-3 with 1 token id with n qty/copies**: In games, you earn _points_ and buy _items_ using these points in a game. At the same time, you can exchange items too. The “items” can be represented by **Non-Fungible ERC-1155** and “points” can be represented as **Fungible ERC-1155**.
+
+  All these collections can be put into 1 ERC1155 based contract. Each collection is represented by a token id. And each token id has a balance & owner (could be creator or holder).
 
 #### AtomicAssets: EOSIO NFT standard
 

@@ -27,12 +27,14 @@ Read [more](https://medium.com/@datash/an-introduction-to-generative-art-nfts-35
 ## Task
 
 1. Create your own NFT collection
-> - Here, the arts would be generated based on multiple layers/features/traits - face, eyes, ears, nose, mouth
-> - The method followed is completely algorithmic using random trait generation.
-<!-- TODO: There is another method which is based on AI -->
+   > - Here, the arts would be generated based on multiple layers/features/traits - face, eyes, ears, nose, mouth
+   > - The method followed is completely algorithmic using random trait generation.
+   <!-- TODO: There is another method which is based on AI -->
 2. Create NFT metadata
-> Here, images & its metadata would be uploaded into Pinata cloud (IPFS based).
-<!-- TODO: deploy on Filecoin or Arweave as they are permanent IPFS based storage  -->
+
+   > Here, images & its metadata would be uploaded into Pinata cloud (IPFS based).
+
+   <!-- TODO: deploy on Filecoin or Arweave as they are permanent IPFS based storage  -->
 
 3. Deploy NFT SC
 4. Mint NFT
@@ -50,11 +52,12 @@ Here, we have the different layers/traits/features (in folder - "./img/face_part
 
 ### Part B: Upload images & metadata (Using JS)
 
-> - This part can be done using python as there is an unofficial python lib for Pinata: <https://pypi.org/project/pinatapy-vourhey/> which is not updated since 2020.
+> - This part can be done using python as there is no official python lib for Pinata: <https://pypi.org/project/pinatapy-vourhey/>.
 > - So, this part has been done using NodeJS lib for Pinata: <https://www.npmjs.com/package/@pinata/sdk> which is maintained officially on a regular basis.
 
 1. Sign up for Pinata [here](https://www.pinata.cloud/)
 2. Generate an API Key [here](https://app.pinata.cloud/keys)
+
    - Make sure the Admin button is selected to have access to all Pinata endpoints.
    - Copy the **PinataAPIKey** and the **SecretAPIKey** to your clipboard. We will be using this later.
 
